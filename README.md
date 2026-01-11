@@ -74,11 +74,20 @@
 
 Эндпоинты API:
 
--`GET /parking/free-spaces-count` - Получить количество свободных мест
--`GET /parking/occupied-spaces-list` - Получить список занятых мест
--`POST /parking/park-car` - Припарковать автомобиль
--`POST /parking/free-up?place_number=<number>` - Освободить парковочное место
--`GET /parking/parking-space-logs?first_name=<name>&last_name=<name>` - Получить логи парковочных мест по имени
+- `GET /parking/free-spaces-count`
+  Получить количество свободных мест
+
+- `GET /parking/occupied-spaces-list`
+  Получить список занятых мест
+
+- `POST /parking/park-car`
+  Припарковать автомобиль
+
+- `POST /parking/free-up?place_number=<number>`
+  Освободить парковочное место
+
+- `GET /parking/parking-space-logs?first_name=<name>&last_name=<name>`
+  Получить логи парковочных мест по имени
 
 Все эндпоинты требуют заголовок `X-API-Key` с действительным API ключом.
 
@@ -88,12 +97,23 @@
 
 Переменные окружения могут быть установлены в файле `.env` или как системные переменные окружения:
 
--`PARKING_SERVICE_API_KEY` (обязательно) - API ключ для аутентификации
--`PARKING_SLOTS_COUNT` - Общее количество парковочных мест (по умолчанию: 52)
--`MONGODB_URL` - URL подключения к MongoDB (по умолчанию: mongodb://mongodb:27017)
--`APP_TITLE` - Название приложения (по умолчанию: Parking Service)
--`DB_NAME` - Имя базы данных (по умолчанию: ParkingService)
--`SERVER_PORT` - Порт сервера (по умолчанию: 8000)
+- `PARKING_SERVICE_API_KEY` (обязательно)
+  API ключ для аутентификации
+
+- `PARKING_SLOTS_COUNT`
+  Общее количество парковочных мест (по умолчанию: 52)
+
+- `MONGODB_URL`
+  URL подключения к MongoDB (по умолчанию: mongodb://mongodb:27017)
+
+- `APP_TITLE`
+  Название приложения (по умолчанию: Parking Service)
+
+- `DB_NAME`
+  Имя базы данных (по умолчанию: ParkingService)
+
+- `SERVER_PORT`
+  Порт сервера (по умолчанию: 8000)
 
 ## Зависимости
 
