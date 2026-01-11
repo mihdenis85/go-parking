@@ -1,4 +1,58 @@
 basePath: /
+definitions:
+  api.AddParkingSpaceLogSchema:
+    properties:
+      car_make:
+        example: Toyota
+        type: string
+      first_name:
+        example: Иван
+        type: string
+      last_name:
+        example: Иванов
+        type: string
+      license_plate:
+        example: А123БВ777
+        type: string
+    required:
+    - car_make
+    - first_name
+    - last_name
+    - license_plate
+    type: object
+  models.ParkingSpaceLog:
+    properties:
+      car_make:
+        example: Toyota
+        type: string
+      created_at:
+        example: "2024-01-01T12:00:00Z"
+        type: string
+      first_name:
+        example: Иван
+        type: string
+      free_up_time:
+        example: "2024-01-01T14:00:00Z"
+        type: string
+      id:
+        example: 507f1f77bcf86cd799439011
+        type: string
+      is_active:
+        example: true
+        type: boolean
+      last_name:
+        example: Иванов
+        type: string
+      license_plate:
+        example: А123БВ777
+        type: string
+      log_id:
+        example: log-123
+        type: string
+      place_number:
+        example: 1
+        type: integer
+    type: object
 host: localhost:8000
 info:
   contact:
@@ -12,7 +66,200 @@ info:
   termsOfService: http://swagger.io/terms/
   title: Parking Service API
   version: "1.0"
-paths: {}
+paths:
+  /parking/free-spaces-count:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает количество свободных парковочных мест
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: integer
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Получить количество свободных мест
+      tags:
+      - parking
+  /parking/free-up:
+    post:
+      consumes:
+      - application/json
+      description: Освобождает указанное парковочное место
+      parameters:
+      - description: Номер парковочного места
+        in: query
+        name: place_number
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ParkingSpaceLog'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Освободить парковочное место
+      tags:
+      - parking
+  /parking/occupied-spaces-list:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает список всех занятых парковочных мест
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ParkingSpaceLog'
+            type: array
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Получить список занятых мест
+      tags:
+      - parking
+  /parking/park-car:
+    post:
+      consumes:
+      - application/json
+      description: Занимает свободное парковочное место для автомобиля
+      parameters:
+      - description: Данные автомобиля
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/api.AddParkingSpaceLogSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ParkingSpaceLog'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Припарковать автомобиль
+      tags:
+      - parking
+  /parking/parking-space-logs:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает логи парковочных мест по имени и фамилии владельца
+      parameters:
+      - description: Имя владельца
+        in: query
+        name: first_name
+        required: true
+        type: string
+      - description: Фамилия владельца
+        in: query
+        name: last_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ParkingSpaceLog'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Получить логи парковочных мест
+      tags:
+      - parking
 securityDefinitions:
   ApiKeyAuth:
     description: API Key для аутентификации

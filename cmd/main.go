@@ -20,6 +20,26 @@ import (
 	_ "github.com/amend-parking-backend/docs"
 )
 
+// @title           Parking Service API
+// @version         1.0
+// @description     API для управления парковочными местами
+// @termsOfService  http://swagger.io/terms/
+
+// @contact.name   API Support
+// @contact.url    http://www.swagger.io/support
+// @contact.email  support@swagger.io
+
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name X-API-Key
+// @description API Key для аутентификации
+
+// @host      localhost:8000
+// @BasePath  /
+
 func main() {
 	config.LoadConfig()
 
